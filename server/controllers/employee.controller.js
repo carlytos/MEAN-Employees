@@ -10,7 +10,12 @@ employeeController.getEmployees = async (req, res) => {
 };
 
 employeeController.createEmployee = async (req, res) => {
-    const employee = new employeeBDD(req.body);
+    const employee = new employeeBDD({
+        name: req.body.name,
+        position: req.body.position,
+        office: req.body.office,
+        salary: req.body.salary
+    });
     await employee.save();
     res.json({
         'status': 'Employee Saved'
@@ -35,7 +40,7 @@ employeeController.editEmployee = async (req, res) => {
 };
 
 employeeController.deleteEmployee = async (req, res) => {
-    await employeeBDD.findByIdAndRemove(req.params.id);
+    await employeeBDD.findByIdAndDelete(req.params.id);
     res.json({ 'status': 'Employee Deleted' });
 };
 
